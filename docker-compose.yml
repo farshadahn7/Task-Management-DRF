@@ -1,0 +1,16 @@
+version: '3.11.4'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: task_management_container
+    command: sh -c "python manage.py runserver 0.0.0.0:8000"
+    restart: always
+    volumes:
+      - ./core:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
