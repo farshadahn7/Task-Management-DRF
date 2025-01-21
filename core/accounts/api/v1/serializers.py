@@ -41,3 +41,4 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 class CustomTokenRefreshSerializer(TokenRefreshSerializer):
     pass
+
