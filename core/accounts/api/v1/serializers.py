@@ -42,3 +42,29 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 class CustomTokenRefreshSerializer(TokenRefreshSerializer):
     pass
 
+class ChangePasswordSerializers(serializers.Serializer):
+    old_password = serializers.CharField(max_length=255, write_only=True)
+    new_password = serializers.CharField(max_length=255, write_only=True)
+    new_password1 = serializers.CharField(max_length=255, write_only=True)
+
+    def validate(self, attrs):
+        print(attrs)
+        user_obj = self.context.get('request').user
+        if attrs.get('new_password') != attrs.get('new_password1'):
+            raise serializers.ValidationError("Password are not equal")
+
+        if not user_obj.check_password(attrs.get("old_password")):
+            raise serializers.ValidationError({'details': "Old Password is incorrect."})
+        try:
+            validate_password(attrs.get('new_password'))
+        except ValidationError as e:
+            raise serializers.ValidationError({"details": list(e.messages)})
+        return super().validate(attrs)
+
+    def update(self, instance, validated_data):
+        del validated_data["old_password"]
+        del validated_data["new_password1"]
+        print(validated_data)
+        instance.set_password(validated_data.get('new_password'))
+        instance.save()
+        return instance

@@ -1,5 +1,5 @@
 from rest_framework.response import Response
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView, UpdateAPIView
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -11,8 +11,9 @@ from rest_framework.views import APIView
 from decouple import config
 import jwt
 from jwt.exceptions import ExpiredSignatureError, InvalidTokenError
+from rest_framework.permissions import IsAuthenticated
 
-from .serializers import RegistrationSerializers, CustomTokenObtainPairSerializer, CustomTokenRefreshSerializer
+from .serializers import RegistrationSerializers, CustomTokenObtainPairSerializer, CustomTokenRefreshSerializer, ChangePasswordSerializers
 from ...models import CustomUser
 
 
@@ -53,3 +54,10 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 
 class CustomTokenRefreshView(TokenRefreshView):
     serializer_class = CustomTokenRefreshSerializer
+
+class ChangePasswordView(UpdateAPIView):
+    serializer_class = ChangePasswordSerializers
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self, queryset=None):
+        return self.request.user
