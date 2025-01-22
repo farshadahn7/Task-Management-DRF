@@ -24,12 +24,13 @@ class Task(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
+        return super().save(*args,**kwargs)
 
     def __str__(self):
         return self.title
 
-    # def get_api_absolute_url(self):
-    #     return reverse('task:api-v1:task-detail', kwargs={'slug':self.slug})
+    def get_api_absolute_url(self):
+        return reverse('task:api-v1:task-detail', kwargs={'slug':self.slug})
 
     class Meta:
         ordering = ['created_date']

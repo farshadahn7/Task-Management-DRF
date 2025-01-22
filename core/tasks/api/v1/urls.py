@@ -1,10 +1,11 @@
 from django.urls import path
+from rest_framework.routers import DefaultRouter
 
 from . import views
-from ...models import Task
 
 app_name = 'api-v1'
 
-urlpatterns = [
+rout = DefaultRouter()
+rout.register('tasks', views.TaskViewSet, basename='task')
 
-]
+urlpatterns = rout.urls
