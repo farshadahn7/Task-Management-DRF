@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'mail_templated',
     'rest_framework_swagger',
     'drf_yasg',
+    'django_filters',
 
     # Local apps
     'accounts.apps.AccountsConfig',
