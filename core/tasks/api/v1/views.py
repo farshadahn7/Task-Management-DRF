@@ -7,10 +7,11 @@ from rest_framework.generics import RetrieveUpdateAPIView
 
 from ...models import Task
 from .serializers import TaskSerializers, UserTaskSerializers
-
+from .permissions import IsOwnerOrReadOnly
 
 class TaskViewSet(viewsets.ModelViewSet):
     serializer_class = TaskSerializers
+    permission_classes = [IsOwnerOrReadOnly]
     queryset = Task.objects.all()
     lookup_field = 'slug'
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]

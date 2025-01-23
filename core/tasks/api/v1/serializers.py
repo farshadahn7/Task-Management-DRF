@@ -36,6 +36,7 @@ class TaskSerializers(serializers.ModelSerializer):
         return super().create(validated_data)
 
 class UserTaskSerializers(serializers.ModelSerializer):
+    title = serializers.CharField(max_length=125, read_only=True)
     class Meta:
         model=Task
         fields = ['title', 'description', 'status', 'assigned_user', 'due_date']
