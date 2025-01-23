@@ -15,6 +15,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from .serializers import RegistrationSerializers, CustomTokenObtainPairSerializer, CustomTokenRefreshSerializer, ChangePasswordSerializers
 from ...models import CustomUser
+from ...tasks import send_verified_email
 
 
 class RegistrationView(CreateAPIView):
@@ -31,7 +32,7 @@ class RegistrationView(CreateAPIView):
         serialized_data.save()
         user_obj = get_object_or_404(CustomUser, username=serialized_data.data['username'])
         user_token = self.get_tokens_for_user(user_obj)
-        send_mail('email/verification_email.tpl', {'user': user_obj.username, 'token': user_token}, 'admin@admin.com',
+        send_verified_email('email/verification_email.tpl', {'user': user_obj.username, 'token': user_token}, 'admin@admin.com',
                   [user_obj.email])
         return Response("You are registered successfully.Please check your email for verification.")
 
