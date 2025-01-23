@@ -8,4 +8,8 @@ app_name = 'api-v1'
 rout = DefaultRouter()
 rout.register('tasks', views.TaskViewSet, basename='task')
 
-urlpatterns = rout.urls
+urlpatterns = [
+    path('user/<slug:slug>/', views.UserTaskView.as_view(), name='user-task'),
+]
+
+urlpatterns += rout.urls

@@ -35,3 +35,9 @@ class TaskSerializers(serializers.ModelSerializer):
     def create(self, validated_data):
         return super().create(validated_data)
 
+class UserTaskSerializers(serializers.ModelSerializer):
+    class Meta:
+        model=Task
+        fields = ['title', 'description', 'status', 'assigned_user', 'due_date']
+        read_only_fields = ['title','description', 'assigned_user', 'due_date']
+
