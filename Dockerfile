@@ -4,7 +4,13 @@ ENV PYTHONDONTWRITEBYTECODE='1'
 ENV PYTHONUNBUFFERED='1'
 
 WORKDIR /app/
-RUN pip install --upgrade pip
+
+RUN apt-get update && apt-get install --no-install-recommends -y \
+  build-essential \
+  libpq-dev \
+  git
+
+
 COPY ./.env /app/
 
 COPY ./requirements.txt /app/

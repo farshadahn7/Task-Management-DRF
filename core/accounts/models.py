@@ -17,18 +17,18 @@ class CustomManager(BaseUserManager):
         return user
 
     def create_superuser(self, username, email, password, **extra_fields):
-        extra_fields.setdefault('is_active', True)
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
-        extra_fields.setdefault('is_verified', True)
+        extra_fields.setdefault("is_active", True)
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", True)
+        extra_fields.setdefault("is_verified", True)
 
-        if extra_fields.get('is_superuser') is not True:
+        if extra_fields.get("is_superuser") is not True:
             raise ValueError("Super user must be True")
-        if extra_fields.get('is_active') is not True:
+        if extra_fields.get("is_active") is not True:
             raise ValueError("Active must be True")
-        if extra_fields.get('is_staff') is not True:
+        if extra_fields.get("is_staff") is not True:
             raise ValueError("staff must be True")
-        if extra_fields.get('is_verified') is not True:
+        if extra_fields.get("is_verified") is not True:
             raise ValueError("verified must be True")
 
         return self.create_user(username, email, password, **extra_fields)
@@ -46,8 +46,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email']
+    USERNAME_FIELD = "username"
+    REQUIRED_FIELDS = ["email"]
     objects = CustomManager()
 
     def __str__(self):
