@@ -42,6 +42,8 @@ Follow these steps to set up the project locally:
     python -m venv venv
     source venv/bin/activate # On Windows: venv\Scripts\activate
 
-3. **Run docker command**:
+3. **Configure .env.exmple**:
+  - Configure the postgres variables such as user,password and so on.
+4. **Run docker command**:
     ```bash
     docker compose up --build
